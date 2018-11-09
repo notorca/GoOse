@@ -198,16 +198,21 @@ func (c *Crawler) fetchHTML(u string, timeout time.Duration) (string, error) {
 		return "", err
 	}
 
+	var noKeepAliveTransport http.RoundTripper = &http.Transport{
+		TLSHandshakeTimeout: timeout,
+		DisableKeepAlives:   true,
+	}
 	client := &http.Client{
-		Jar:     cookieJar,
-		Timeout: timeout,
+		Jar:       cookieJar,
+		Timeout:   timeout,
+		Transport: noKeepAliveTransport,
 	}
 
 	req, err := http.NewRequest("GET", u, nil)
 	if err != nil {
 		return "", err
 	}
-
+	req.Close = true
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_7) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.91 Safari/534.30")
 	resp, err := client.Do(req)
 	if err != nil {

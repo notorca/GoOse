@@ -10,11 +10,11 @@ import (
 )
 
 var punctuationRegex = regexp.MustCompile(`[^\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}\p{Pc}\s]`)
-var cachedStopWords = func() map[string]*set.Set {
-	cachedStopWords := make(map[string]*set.Set)
+var cachedStopWords = func() map[string]set.Interface {
+	cachedStopWords := make(map[string]set.Interface)
 	for lang, stopwords := range sw {
 		lines := strings.Split(stopwords, "\n")
-		cachedStopWords[lang] = set.New(set.NonThreadSafe).(*set.Set)
+		cachedStopWords[lang] = set.New(set.NonThreadSafe)
 		for _, line := range lines {
 			if strings.HasPrefix(line, "#") {
 				continue
@@ -28,7 +28,7 @@ var cachedStopWords = func() map[string]*set.Set {
 
 // StopWords implements a simple language detector
 type StopWords struct {
-	cachedStopWords map[string]*set.Set
+	cachedStopWords map[string]set.Interface
 }
 
 // NewStopwords returns an instance of a stop words detector

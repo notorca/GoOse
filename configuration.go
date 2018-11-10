@@ -52,14 +52,14 @@ func GetDefaultConfiguration(args ...string) Configuration {
 	return Configuration{
 		localStoragePath:        "",   //not used in this version
 		imagesMinBytes:          4500, //not used in this version
-		enableImageFetching:     true,
+		enableImageFetching:     false,
 		useMetaLanguage:         true,
 		targetLanguage:          "en",
 		imageMagickConvertPath:  "/usr/bin/convert",  //not used in this version
 		imageMagickIdentifyPath: "/usr/bin/identify", //not used in this version
 		browserUserAgent:        defaultUserAgent,
 		debug:                   false,
-		extractPublishDate:      true,
+		extractPublishDate:      false,
 		additionalDataExtractor: false,
 		stopWordsPath:           "resources/stopwords",
 		stopWords:               NewStopwords(), //TODO with path
